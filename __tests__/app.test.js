@@ -49,13 +49,26 @@ describe('. routes', () => {
 
   it('gets one entry of the setlist by id', async () => {
     const res = await request(app)
-    .get('/api/v1/setlists');
-    expect(res.body).toEqual([{
+    .get('/api/v1/setlists/1');
+    expect(res.body).toEqual({
       id: '1',
       track: 'train junkie', 
       artist: 'greensky bluegrass', 
       timesPlayed: 200
-    }])
+    })
+  })
+
+  it('edits one setlist entry with PUT', async () => {
+    const res = await request(app)
+    .put('/api/v1/setlists/1')
+    .send({ id: '1', track: 'king of the hill', artist: 'greensky bluegrass', timesPlayed: 80 });
+
+    expect(res.body).toEqual({
+      id: '1',
+      track: 'king of the hill', 
+      artist: 'greensky bluegrass', 
+      timesPlayed: 80
+    })
   })
 
 });
