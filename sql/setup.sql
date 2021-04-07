@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS setlists;
+CREATE TABLE setlists (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    track TEXT NOT NULL,
+    artist TEXT NOT NULL,
+    times_played INTEGER
+);
