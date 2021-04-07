@@ -2,6 +2,7 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
+const Setlist = require('../lib/models/Setlist')
 
 describe('. routes', () => {
   beforeEach(() => {
@@ -19,6 +20,22 @@ describe('. routes', () => {
         artist: 'greensky bluegrass', 
         timesPlayed: 200
       });
+    });
+  })
+
+  
+  it('gets a list of entries from the setlist with GET', async () => {
+    
+    const setlist = await Promise.all([
+      Setlist.insert({ track: 'train junkie', artist: 'greensky bluegrass', timesPlayed: 200 }),
+      Setlist.insert({ track: 'all for money', artist: 'greensky bluegrass', timesPlayed: 90 }),
+      Setlist.insert({ track: 'king of the hill', artist: 'greensky bluegrass', timesPlayed: 40 }),
+    ])
+
+    return request(app)
+    .get('/api/v1/setlists')
+    .then((res) => {
+      expect(res.body).toEqual(expect.arrayContaining(setlist));
     });
   })
 });
