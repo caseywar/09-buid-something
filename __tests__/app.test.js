@@ -71,4 +71,16 @@ describe('. routes', () => {
     })
   })
 
+  it('deletes one setlist entry with DELETE', async () => {
+    const res = await request(app)
+    .delete('/api/v1/setlists/1');
+
+    expect(res.body).toEqual({
+    artist: "greensky bluegrass",
+    id: "1",
+    timesPlayed: 200,
+    track: "train junkie"
+    })
+  })
+
 });
